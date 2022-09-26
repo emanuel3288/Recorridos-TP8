@@ -52,7 +52,7 @@ procedure VaciarFilaDe_Al_(color,direccionPrincipal,direccionSecundaria) {
 
 procedure IrAlInicioDelRecorridoAl_(direccionPrincipal,direccionSecundaria){
     /*
-    Proposito:      -Posiciona el cabezal en el borde opuesto de la **direccion**.
+    Proposito:      -Posiciona el cabezal en el borde opuesto de la **direccionPrincipal** y la **direccionPrincipal**.
     Precondición:   -Ninguna.  
     Parámetros:
         **direccion**: Direccion. Indíca el borde opuesto donde se posiciona el cabezal.
