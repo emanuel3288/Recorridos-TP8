@@ -40,7 +40,7 @@ procedure VaciarFilaDe_Al_(color,direccionPrincipal,direccionSecundaria) {
     Precondición:   -Ninguna.      
     Parámetros:
         **color**: Color. Indíca el color de las bolitas a sacar de la fila actual.
-    Observación: El recorrido es un recorrido por celdas.
+    Observación: El recorrido es un recorrido por celdas hacia el noreste.
     */
     IrAlInicioDelRecorridoAl_(direccionPrincipal,direccionSecundaria)                 //Inicio del recorrido
     while(quedanCeldasPorRecorrerAl_(direccionPrincipal,direccionSecundaria)) {       //quedan celdas por recorrer?
