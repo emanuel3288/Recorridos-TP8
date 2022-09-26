@@ -1,6 +1,5 @@
-
 program {
-    CompletarHasta_De_EnElTablero(10, Rojo)
+   CompletarHasta_De_EnElTablero(14, Rojo)
 }
 
 /*d
@@ -30,24 +29,18 @@ procedure CompletarHasta_De_EnElTablero(cantidad, color) {
 }
 procedure Poner_SiNoHaySinoPonerLasRestantesDe_(cantidad, color) {
     /*
-    Propósito:      
+    Propósito:      -Pone **cantidad**         
     Precondición:
     Parámetros:
     */
     if(nroBolitas(color)==0) {
         Poner_DeColor_(cantidad, color)
     }elseif(nroBolitas(color)<2){
-        
         Poner_DeColor_(cantidad-nroBolitas(color), color)
-        
     }elseif(nroBolitas(color)>2) {
-      
-      Sacar_DeColor_(nroBolitas(color)-cantidad, color)
-        
+        Sacar_DeColor_(nroBolitas(color)-cantidad, color)
     }
 }
-
-
 
 //c
 procedure RellenarCon_EnAusenciaDe_EnElTablero(colorAPoner, colorAMirar) {
@@ -61,7 +54,7 @@ procedure RellenarCon_EnAusenciaDe_EnElTablero(colorAPoner, colorAMirar) {
     */
     IrAPrimeraCeldaEnUnRecorridoAl_Y_(Este, Norte)
     while(haySiguienteCeldaEnUnRecorridoAl_Y_(Este, Norte)){
-        Poner_Si_(colorAPoner, not hayBolitas(colorAMirar))   
+        Poner_Si_(colorAPoner,siNoHayBolitas_(colorAMirar))   
         IrASiguienteCeldaEnUnRecorridoAl_Y_(Este, Norte)
     }
     Poner_Si_(colorAPoner, siNoHayBolitas_(colorAMirar))    
@@ -81,7 +74,7 @@ function siNoHayBolitas_(colorAMirar) {
 //B
 procedure UnaDeCadaEnTodoElTablero() {
     /*
-    Próposito:      -Pinta el tablero con una bolita de cada color hacia el noreste. El cabezal finaliza en la esquina noreste del tablero.
+    Próposito:      -Pinta el tablero con una bolita de cada color por celda hacia el noreste. El cabezal finaliza en la esquina noreste del tablero.
     Precondición:   -El tablero debe estar vacio.
     Observacion:    -Es un recorrido por celdas hacia el noreste.
     */
@@ -104,12 +97,21 @@ procedure PintarTableroDe_(color) {
     */
     IrAPrimeraCeldaEnUnRecorridoAl_Y_(Este, Norte)
     while(haySiguienteCeldaEnUnRecorridoAl_Y_(Este, Norte)){
-        Poner(color)
+        PintarCeldaDe_(color)
         IrASiguienteCeldaEnUnRecorridoAl_Y_(Este, Norte)
     }
-    Poner(color)
-    
+    PintarCeldaDe_(color)
 }
+procedure PintarCeldaDe_(color){
+    /*
+    Propósito:     -Pinta la celda actual de **color**. 
+    Precondición:  -Ninguna.
+    Parámetros:
+        **color**: -Color.  Indíca con que color se pinta la celda.
+    */
+    Poner(color)  
+}
+
 
 procedure IrAPrimeraCeldaEnUnRecorridoAl_Y_(dirPrincipal, dirSecundaria) {
   /*
@@ -117,7 +119,7 @@ procedure IrAPrimeraCeldaEnUnRecorridoAl_Y_(dirPrincipal, dirSecundaria) {
     PARÁMETROS:
       * dirPrincipal:   -Dirección. Indíca la primer dirección que debe tomar el cabezal para ubicarse en la primera celda del recorrido.
       * dirSecundaria:  -Dirección. Indíca la segunda dirección que debe tomar el cabezal para ubicarse en la primera celda del recorrido.
-    PRECONDICIONES:     -ver.
+    PRECONDICIONES:     -Ninguna.
       * 
   */
   IrAlBorde(opuesto(dirPrincipal))
@@ -211,6 +213,19 @@ procedure Poner_DeColor_(cantidadAPoner, colorAPoner) {
   */
   repeat(cantidadAPoner) {
     Poner(colorAPoner)
+  }
+}
+
+procedure Sacar_DeColor_(cantidadASacar, colorASacar) {
+  /*
+  PROPOSITO:     -Saca **cantidadASacar** bolitas de color **colorASacar** de la celda actual.
+  PRECONDICION:  -Debe existir al menos **cantidadASacar** bolita/s de color **colorASacar**.
+  PARAMETROS:    -**cantidadASacar**: -Numero.Indíca el cantidad de bolitas a sacar de la celda actual.
+                 -**colorASacar**:    -Color. Indíca el color de la bolita a sacar de la celda actual.
+  OBSERVACIONES: La cantidad a sacar debe ser mayor a 0.
+  */
+  repeat(cantidadASacar) {
+    Sacar(colorASacar)
   }
 }
 
