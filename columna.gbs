@@ -1,0 +1,93 @@
+/*8. Buscando la bolita roja en la fila/columna
+Escribir un procedimiento IrHastaLaBolitaRojaHacia_(direcciónABuscar) que deja el
+cabezal posicionado en la celda más próxima a la actual en la dirección dada que posea una bolita de
+color Rojo Cuidado, sí hay una bolita de color Rojo en la celda actual, el cabezal debe moverse a la más
+cercana, no permanecer en la actual. ¿Cuál es la precondición de este procedimiento?*/
+
+program {
+    IrHastaLaBolitaRojaHacia_(Sur)
+}
+
+procedure IrHastaLaBolitaRojaHacia_(direcciónABuscar) {
+    /*
+    Propósito:                -Posiciona el en la celda más próxima a la actual en la **direcciónABuscar** dada que posea una bolita de color rojo.
+    Precondición:             -Debe existir al menos un bolita roja en la **direcciónABuscar**.
+    Parámetros:
+        **direcciónABuscar**: -Dirección. Indíca la dirección donde se posiciona el cabezal.
+    Observación:              -Es un recorrido de búsqueda de filas/columnas. 
+                              -Puede haber solamente una bolita de color rojo por celda.
+    */
+    Mover_Si_(direcciónABuscar, puedeMover(direcciónABuscar) && hayBolitas(Rojo))
+    while(noHayBolitasRojasEnLaCeldaLindanteHaciaLa_(direcciónABuscar)){
+        Mover(direcciónABuscar)
+    }
+}
+
+function noHayBolitasRojasEnLaCeldaLindanteHaciaLa_(direccion) {
+    /*
+    Propósito:              -Indíca si no hay bolitas rojas en la celda lindate hacia la **direccion**.
+    Precondición:           -Ninguna.
+    Parámetros:
+        **direccion**:      -Dirección. Indíca hacia donde se encuentra la celda lindante respecto del cabezal.
+    Tipo:                   -Booleano.  Retorna verdadero en el caso de que no haya una bolita de color rojo en la **direccion**, en caso contrario retorna falso.
+    */
+    return(puedeMover(direccion) && not hayBolitas(Rojo))
+}
+
+procedure IrAPrimeraCeldaEnUnRecorridoAl_Y_(dirPrincipal, dirSecundaria) {
+  /*
+    PROPÓSITO:          -Posiciona el cabezal en la primera celda del recorrido en **dirPrincipal** y en **dirSecundaria**. 
+    PARÁMETROS:
+      * dirPrincipal:   -Dirección. Indíca la primer dirección que debe tomar el cabezal para ubicarse en la primera celda del recorrido.
+      * dirSecundaria:  -Dirección. Indíca la segunda dirección que debe tomar el cabezal para ubicarse en la primera celda del recorrido.
+    PRECONDICIONES:     -ver.
+      * 
+  */
+  IrAlBorde(opuesto(dirPrincipal))
+  IrAlBorde(opuesto(dirSecundaria))
+}
+
+function haySiguienteCeldaEnUnRecorridoAl_Y_(dirPrincipal, dirSecundaria) {
+  /*
+    PROPÓSITO:            -Indíca si existe la siguiente celda en un recorrido hacia la **dirPrincipal** y la **dirSecundaria**.
+    PARÁMETROS:     
+      * dirPrincipal:     -Dirección. Indíca la primera dirección del recorrido. 
+      * dirSecundaria:    -Dirección. Indíca la segunda dirección del recorrido.
+    PRECONDICIONES:       -Ninguna.
+      * 
+    Tipo:                 -Booleano.Retorna verdadeor en el caso de que exista una siguiente celda en el recorrido, en caso contrario retorna falso.
+  */
+  return(puedeMover(dirPrincipal) || puedeMover(dirSecundaria))
+}
+
+procedure  IrASiguienteCeldaEnUnRecorridoAl_Y_(dirPrincipal, dirSecundaria) {
+  /*
+    PROPÓSITO:        -Posiciona el cabezal en la siguiente celda del recorrido con **dirPrincipal** y **dirPrincipal**
+    PRECONDICIONES:   -Ninguna.
+    PARÁMETROS:
+      * dirPrincipal: -Dirección.-Indíca la primera dirección del recorrido.
+      * dirSecundaria:-Dirección.-Indíca la segunda dirección del recorrido.
+  */
+  //Va al opuesto de la direccion principal.
+  if(puedeMover(dirPrincipal)) {
+    Mover(dirPrincipal)
+  }else {
+    IrAlBorde(opuesto(dirPrincipal))
+    Mover(dirSecundaria)
+  }
+}
+
+
+procedure Mover_Si_(dirección, condición) {
+  /*
+    PROPÓSITO:      -Posiciona el cabezal en la celda lindante en la **dirección** si se cumple la **condición**. 
+    PARÁMETROS:
+      * dirección:  -Dirección. -Indíca la dirección en la que mueve el cabezal.
+      * condición:  -Booleano.  -Indíca la condición necesaria que se debe cumplir para que el cabezal se mueva.
+    PRECONDICIONES: -Debe existir al menos una celda lindante en esa **dirección** si se cumple la **condición**.
+      * 
+  */
+  if (condición) {
+    Mover(dirección)
+  }  
+}

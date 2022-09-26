@@ -1,0 +1,18 @@
+program {
+    IrAlBorde_(Norte)
+    IrAlBorde_(Oeste)
+    
+}
+
+procedure IrAlBorde_(dirección) {
+    /*
+    Propósito:      -Posiciona el cabezal en el borde del tablero en la **dirección**.
+    Precondición:   -Ninguna.
+    Parámetros:
+        **dirección**: Dirección. Indíca hacia que borde se debe mover el cabezal.
+    Observación: Si el cabezal se encuentra en el borde de la dirección ingresada, la posición no se modificará.
+    */
+    while(puedeMover(dirección)) {
+        Mover(dirección)
+    }
+}

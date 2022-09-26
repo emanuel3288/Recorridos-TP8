@@ -1,0 +1,231 @@
+
+program {
+    CompletarHasta_De_EnElTablero(10, Rojo)
+}
+
+/*d
+d. CompletarHasta_De_EnElTablero(cantidad, color) que deja en cada celda del
+tablero exactamente tantas bolitas del color dado como la cantidad indicada por el parámetro
+cantidad. Note que puede que ya existan bolitas del color dado en algunas de las celdas, en cuyo caso. Realice el procedimiento sin 
+hacer uso del comando Sacar ni ninguno de los
+procedimientos que implican Sacar.
+*/
+
+//d
+procedure CompletarHasta_De_EnElTablero(cantidad, color) {
+    /*
+    Próposito:       -Completa hasta **cantidad** de **color** en el tablero hacia el noreste.
+    Precondición:    -Ninguna.
+    Parámetros:
+        **color**:   -Color. Indíca el color de las bolitas a poner en el tablero.
+        **cantidad**:-Número.Indíca el número total de bolitas de **color** que se ponen en cada celda del tablero.
+    Observacion:     -Es un recorrido por celdas hacia el noreste.
+    */
+    IrAPrimeraCeldaEnUnRecorridoAl_Y_(Este, Norte)
+    while(haySiguienteCeldaEnUnRecorridoAl_Y_(Este, Norte)){
+        Poner_SiNoHaySinoPonerLasRestantesDe_(cantidad, color)
+        IrASiguienteCeldaEnUnRecorridoAl_Y_(Este, Norte)
+    }
+     Poner_SiNoHaySinoPonerLasRestantesDe_(cantidad, color)
+}
+procedure Poner_SiNoHaySinoPonerLasRestantesDe_(cantidad, color) {
+    /*
+    Propósito:      
+    Precondición:
+    Parámetros:
+    */
+    if(nroBolitas(color)==0) {
+        Poner_DeColor_(cantidad, color)
+    }elseif(nroBolitas(color)<2){
+        
+        Poner_DeColor_(cantidad-nroBolitas(color), color)
+        
+    }elseif(nroBolitas(color)>2) {
+      
+      Sacar_DeColor_(nroBolitas(color)-cantidad, color)
+        
+    }
+}
+
+
+
+//c
+procedure RellenarCon_EnAusenciaDe_EnElTablero(colorAPoner, colorAMirar) {
+        /*
+    Próposito:      -Pinta el tablero con una bolita de cada color hacia el noreste. El cabezal finaliza en la esquina noreste del tablero.
+    Precondición:   -Ninguna.
+    Parámetros:
+        **colorAPoner**:  -Color. Indíca el color de las bolitas a poner en el tablero.
+        **colorAMirar**:  -Color. Indíca el color que se quiera saber si existe o no en el tablero.
+    Observacion:    -Es un recorrido por celdas hacia el noreste.
+    */
+    IrAPrimeraCeldaEnUnRecorridoAl_Y_(Este, Norte)
+    while(haySiguienteCeldaEnUnRecorridoAl_Y_(Este, Norte)){
+        Poner_Si_(colorAPoner, not hayBolitas(colorAMirar))   
+        IrASiguienteCeldaEnUnRecorridoAl_Y_(Este, Norte)
+    }
+    Poner_Si_(colorAPoner, siNoHayBolitas_(colorAMirar))    
+}
+
+function siNoHayBolitas_(colorAMirar) {
+    /*
+    Propósito:              -Indíca si no hay bolitas de **colorAMirar** en la celda actual.
+    Precondición:           -Ninguna.
+    Parámetros:     
+        **colorAMirar**:    -Color.     -Indíca el color de la bolita a comparar.
+    Tipo:                   -Booleano.  -Retorna verdadero en el caso de que no haya bolitas del **colorAMirar** en la celda actual, en caso contrario retorna falso.
+    */
+    return(not hayBolitas(colorAMirar))
+}
+
+//B
+procedure UnaDeCadaEnTodoElTablero() {
+    /*
+    Próposito:      -Pinta el tablero con una bolita de cada color hacia el noreste. El cabezal finaliza en la esquina noreste del tablero.
+    Precondición:   -El tablero debe estar vacio.
+    Observacion:    -Es un recorrido por celdas hacia el noreste.
+    */
+    IrAPrimeraCeldaEnUnRecorridoAl_Y_(Este, Norte)
+    while(haySiguienteCeldaEnUnRecorridoAl_Y_(Este, Norte)){
+        PonerUnaDeCada()
+        IrASiguienteCeldaEnUnRecorridoAl_Y_(Este, Norte)
+    }
+    PonerUnaDeCada()
+}
+
+//A
+procedure PintarTableroDe_(color) {
+    /*
+    Próposito:      -Pinta el tablero de **color** hacia el noreste. El cabezal finaliza en la esquina noreste del tablero.
+    Precondición:   -El tablero inicial debe estar vacio.
+    Parámetros:
+        **color**:  -Color. Indíca el color de las bolitas a poner en el tablero.
+    Observacion:    -Es un recorrido por celdas hacia el noreste.
+    */
+    IrAPrimeraCeldaEnUnRecorridoAl_Y_(Este, Norte)
+    while(haySiguienteCeldaEnUnRecorridoAl_Y_(Este, Norte)){
+        Poner(color)
+        IrASiguienteCeldaEnUnRecorridoAl_Y_(Este, Norte)
+    }
+    Poner(color)
+    
+}
+
+procedure IrAPrimeraCeldaEnUnRecorridoAl_Y_(dirPrincipal, dirSecundaria) {
+  /*
+    PROPÓSITO:          -Posiciona el cabezal en la primera celda del recorrido en **dirPrincipal** y en **dirSecundaria**. 
+    PARÁMETROS:
+      * dirPrincipal:   -Dirección. Indíca la primer dirección que debe tomar el cabezal para ubicarse en la primera celda del recorrido.
+      * dirSecundaria:  -Dirección. Indíca la segunda dirección que debe tomar el cabezal para ubicarse en la primera celda del recorrido.
+    PRECONDICIONES:     -ver.
+      * 
+  */
+  IrAlBorde(opuesto(dirPrincipal))
+  IrAlBorde(opuesto(dirSecundaria))
+}
+
+function haySiguienteCeldaEnUnRecorridoAl_Y_(dirPrincipal, dirSecundaria) {
+  /*
+    PROPÓSITO:            -Indíca si existe la siguiente celda en un recorrido hacia la **dirPrincipal** y la **dirSecundaria**.
+    PARÁMETROS:     
+      * dirPrincipal:     -Dirección. Indíca la primera dirección del recorrido. 
+      * dirSecundaria:    -Dirección. Indíca la segunda dirección del recorrido.
+    PRECONDICIONES:       -Ninguna.
+      * 
+    Tipo:                 -Booleano.Retorna verdadeor en el caso de que exista una siguiente celda en el recorrido, en caso contrario retorna falso.
+  */
+  return(puedeMover(dirPrincipal) || puedeMover(dirSecundaria))
+}
+
+procedure  IrASiguienteCeldaEnUnRecorridoAl_Y_(dirPrincipal, dirSecundaria) {
+  /*
+    PROPÓSITO:        -Posiciona el cabezal en la siguiente celda del recorrido con **dirPrincipal** y **dirPrincipal**
+    PRECONDICIONES:   -Ninguna.
+    PARÁMETROS:
+      * dirPrincipal: -Dirección.-Indíca la primera dirección del recorrido.
+      * dirSecundaria:-Dirección.-Indíca la segunda dirección del recorrido.
+  */
+  if(puedeMover(dirPrincipal)) {
+    Mover(dirPrincipal)
+  }else {
+    IrAlBorde(opuesto(dirPrincipal))
+    Mover(dirSecundaria)
+  }
+}
+
+procedure SacarTodasLasDeColor_(color) {
+    /*
+    Propósito:           -Saca todas las bolitas de **color** de la celda actual.
+    Precondición:        -Ninguna.
+    Parámetros:
+        **color**: Color.-Indíca el color de las bolitas a sacar en la celda actual.
+    */
+    while(hayBolitas(color)) {
+        Sacar(color)
+    }
+}
+
+procedure VolverAlInicioDelRecorridoAl_(dirPrincipal, dirSecundaria) {
+    /*
+    Propósito:      -Vuelve al inicio del recorrido.
+    Precondición:   -Ninguna.
+    */
+    IrAlBorde(opuesto(dirPrincipal))
+    IrAlBorde(opuesto(dirSecundaria))
+}
+
+
+//Biblioteca----------------------------------------------------------------------------
+procedure PonerUnaDeCada() {
+    /*
+    PROPOSITO:    -Poner una bolita de cada color en la celda actual. 
+    PRECONDICION: -No hay.
+    */
+    Poner(Rojo)
+    Poner(Negro)
+    Poner(Azul)
+    Poner(Verde)
+
+}
+
+procedure Poner_Si_(color, condición){
+  /*
+    PROPÓSITO:      -Pone una bolita de **color** en la celda actual si se cumple la condición.
+    PARÁMETROS:
+      * color:      -Color. Indíca el color a poner en la celda actual.
+      * condición:  -Booleano. Indíca la condición necesaria que se debe cumplir para poner una bolita en la celda actual.
+    PRECONDICIONES: -Ninguna.
+      * 
+  */
+  if (condición) {
+    Poner(color)
+  } 
+}
+
+procedure Poner_DeColor_(cantidadAPoner, colorAPoner) {
+  /*
+  PROPOSITO:    -Poner **cantidadAPoner** de color **colorAPoner** en la celda actual.
+  PRECONDICION: -Ninguna.
+  PARAMETROS:   -**cantidadAPoner**: Numero.Indíca la cantidad de bolitas a poner.
+                -**colorAPoner**:    Color. Indíca el color de la/s bolita/s a poner.
+  */
+  repeat(cantidadAPoner) {
+    Poner(colorAPoner)
+  }
+}
+
+
+procedure Sacar_DeColor_(cantidadASacar, colorASacar) {
+  /*
+  PROPOSITO:     -Saca **cantidadASacar** bolitas de color **colorASacar** de la celda actual.
+  PRECONDICION:  -Debe existir al menos **cantidadASacar** bolita/s de color **colorASacar**.
+  PARAMETROS:    -**cantidadASacar**: -Numero.Indíca el cantidad de bolitas a sacar de la celda actual.
+                 -**colorASacar**:    -Color. Indíca el color de la bolita a sacar de la celda actual.
+  OBSERVACIONES: La cantidad a sacar debe ser mayor a 0.
+  */
+  repeat(cantidadASacar) {
+    Sacar(colorASacar)
+  }
+}
+
+

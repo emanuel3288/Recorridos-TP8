@@ -1,0 +1,90 @@
+program {
+    VaciarFilaDe_Al_(Verde,Norte)
+}
+
+/*
+
+e. Volver a definir el procedimiento con direcciones distintas.
+f. ¿Y si tuviéramos que vaciar la columna en lugar de la fila? ¿Qué cambia entre las distintas
+formas de moverse?
+*/
+
+//F- Si tuvieramos que vaciar una columna simplemente le pasamos como argumento norte o sur.
+
+//E-
+procedure VaciarFilaDe_Al_(color,direccion) {
+    /*
+    Propósito:      -Vacia la fila actual de bolitas de **color** hacia el este.           
+    Precondición:   -Ninguna.      
+    Parámetros:
+        **color**: Color. Indíca el color de las bolitas a sacar de la fila actual.
+    Observación: El recorrido es un recorrido por celdas.
+    */
+    IrAlInicioDelRecorridoAl_(direccion)                 //Inicio del recorrido
+    while(quedanCeldasPorRecorrerAl_(direccion)) {       //quedan celdas por recorrer?
+        SacarTodasLasDeColor_(color)                     // Procesa
+        PasarASiguienteCeldaAl_(direccion)              //pasa a la siguiente celda
+    }                               
+    SacarTodasLasDeColor_(color)                        //finaliza el recorrido
+    VolverAlInicioDelRecorridoAl_(direccion)
+}
+
+procedure IrAlInicioDelRecorridoAl_(direccion){
+    /*
+    Proposito:      -Posiciona el cabezal en el borde opuesto de la **direccion**.
+    Precondición:   -Ninguna.  
+    Parámetros:
+        **direccion**: Direccion. Indíca el borde opuesto donde se posiciona el cabezal.
+    */
+    IrAlBorde_(opuesto(direccion))
+}
+function quedanCeldasPorRecorrerAl_(direccion){
+    /*
+    Propósito:      -Indíca si quedan celdas por recorrer en la fila.
+    Precondición:   -Ninguna.    
+    Tipo:           -Booleano. Retorna verdadero en el caso de que queden celdas por recorrer, en caso contrario retorna falso.
+    */
+    return(puedeMover(direccion))
+}
+procedure PasarASiguienteCeldaAl_(direccion){
+    /*
+    Propósito:          -Pasa a la siguiente celda del recorrido por celdas.
+    Precondiciones:     -Debe existir la celda lindante al este.
+    */
+    Mover(direccion)
+}
+
+
+procedure SacarTodasLasDeColor_(color) {
+    /*
+    Propósito:           -Saca todas las bolitas de **color** de la celda actual.
+    Precondición:        -Ninguna.
+    Parámetros:
+        **color**: Color.-Indíca el color de las bolitas a sacar en la celda actual.
+    */
+    while(hayBolitas(color)) {
+        Sacar(color)
+    }
+}
+
+procedure VolverAlInicioDelRecorridoAl_(direccion) {
+    /*
+    Propósito:      -Vuelve al inicio del recorrido.
+    Precondición:   -Ninguna.
+    */
+    IrAlBorde_(opuesto(direccion))
+}
+
+procedure IrAlBorde_(dirección) {
+    /*
+    Propósito:      -Posiciona el cabezal en el borde del tablero en la **dirección**.
+    Precondición:   -Ninguna.
+    Parámetros:
+        **dirección**: Dirección. Indíca hacia que borde se debe mover el cabezal.
+    Observación: Si el cabezal se encuentra en el borde de la dirección ingresada, la posición no se modificará.
+    */
+    while(puedeMover(dirección)) {
+        Mover(dirección)
+    }
+}
+

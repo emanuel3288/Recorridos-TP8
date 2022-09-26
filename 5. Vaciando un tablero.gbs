@@ -1,0 +1,112 @@
+program {
+
+    VaciarTableroDe_(Verde)
+}
+
+/*
+En cada uno de los casos siguientes, definir de la forma indicada el procedimiento
+VaciarTableroDe_(color), que quite todas las bolitas del color dado por el parámetro color de
+cada una de las celdas del tablero. El cabezal debe poder comenzar en cualquier celda del tablero, y no
+es relevante para el problema donde finaliza, basta con que lo declare en su propósito.
+a. Estructurar el procedimiento como un recorrido sobre las filas . ¿Qué subtareas van a precisarse2
+en este caso? ¿Es necesario volver a definirlas o se pueden encontrar en esta práctica?
+b. Estructurar el procedimiento como un recorrido sobre las celdas del tablero. Las subtareas
+necesarias serán diferentes, y puede ser que sea necesario definir alguna que aún no está
+disponible en esta práctica.
+c. En este última opción, ¿Cuántas formas distintas hay de recorrer el las celdas del tablero? ¿Se
+podría elegir valores distintos para los movimientos?
+d. Implemente ahora nuevamente el procedimiento de 2 formas distintas.
+Reflexionamos ¿Qué diferencias hay entre los recorridos anteriores del punto a y del b? ¿Qué subtareas son más
+complejas en cada caso? ¿Podrían considerarse otros recorridos que no fueran sobre celdas o filas?
+*/
+
+procedure VaciarTableroDe_(color) {
+    VaciarFilaDe_Al_(color,Este,Norte)
+}
+
+procedure VaciarFilaDe_Al_(color,direccionPrincipal,direccionSecundaria) {
+    /*
+    Propósito:      -Vacia la fila actual de bolitas de **color** hacia el este.           
+    Precondición:   -Ninguna.      
+    Parámetros:
+        **color**: Color. Indíca el color de las bolitas a sacar de la fila actual.
+    Observación: El recorrido es un recorrido por celdas.
+    */
+    IrAlInicioDelRecorridoAl_(direccionPrincipal,direccionSecundaria)                 //Inicio del recorrido
+    while(quedanCeldasPorRecorrerAl_(direccionPrincipal,direccionSecundaria)) {       //quedan celdas por recorrer?
+        SacarTodasLasDeColor_(color)                     // Procesa
+        PasarASiguienteCeldaAl_(direccion)              //pasa a la siguiente celda
+    }                               
+    SacarTodasLasDeColor_(color)                        //finaliza el recorrido
+    VolverAlInicioDelRecorridoAl_(direccion)
+}
+
+procedure IrAlInicioDelRecorridoAl_(direccionPrincipal,direccionSecundaria){
+    /*
+    Proposito:      -Posiciona el cabezal en el borde opuesto de la **direccion**.
+    Precondición:   -Ninguna.  
+    Parámetros:
+        **direccion**: Direccion. Indíca el borde opuesto donde se posiciona el cabezal.
+    */
+    IrAlBorde_(opuesto(direccionPrincipal))
+    IrAlBorde_(opuesto(direccionSecundaria))
+}
+
+function quedanCeldasPorRecorrerAl_(direccionPrincipal, direccionSecundaria){
+    /*
+    Propósito:      -Indíca si quedan celdas por recorrer en la fila.
+    Precondición:   -Ninguna.    
+    Tipo:           -Booleano. Retorna verdadero en el caso de que queden celdas por recorrer, en caso contrario retorna falso.
+    */
+    return(puedeMover(direccionPrincipal)|| puedeMover(direccionSecundaria))
+}
+procedure PasarASiguienteCeldaAl_(direccionPrincipal, direccionSecundaria){
+    /*
+    Propósito:          -Pasa a la siguiente celda del recorrido por celdas.
+    Precondiciones:     -Debe existir la celda lindante al este.
+    */
+    if(puedeMover(direccionPrincipal)) {
+        
+        Mover(direccion)
+        
+        
+    }else {
+        Mover(direccionSecundaria)
+    }
+    
+    
+}
+
+
+procedure SacarTodasLasDeColor_(color) {
+    /*
+    Propósito:           -Saca todas las bolitas de **color** de la celda actual.
+    Precondición:        -Ninguna.
+    Parámetros:
+        **color**: Color.-Indíca el color de las bolitas a sacar en la celda actual.
+    */
+    while(hayBolitas(color)) {
+        Sacar(color)
+    }
+}
+
+procedure VolverAlInicioDelRecorridoAl_(direccion) {
+    /*
+    Propósito:      -Vuelve al inicio del recorrido.
+    Precondición:   -Ninguna.
+    */
+    IrAlBorde_(opuesto(direccion))
+}
+
+procedure IrAlBorde_(dirección) {
+    /*
+    Propósito:      -Posiciona el cabezal en el borde del tablero en la **dirección**.
+    Precondición:   -Ninguna.
+    Parámetros:
+        **dirección**: Dirección. Indíca hacia que borde se debe mover el cabezal.
+    Observación: Si el cabezal se encuentra en el borde de la dirección ingresada, la posición no se modificará.
+    */
+    while(puedeMover(dirección)) {
+        Mover(dirección)
+    }
+}

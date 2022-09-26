@@ -1,0 +1,21 @@
+program {
+    
+    SacarTodasLasDeColor_(Rojo)
+
+}
+
+//duda
+// Preguntar que pasa si no hay bolitas de color? cumple el proposito?.
+
+procedure SacarTodasLasDeColor_(color) {
+    /*
+    Propósito:           -Saca todas las bolitas de **color** de la celda actual.
+    Precondición:        -Ninguna.
+    Parámetros:
+        **color**: Color.-Indíca el color de las bolitas a sacar en la celda actual.
+    */
+    while(hayBolitas(color)) {
+        Sacar(color)
+    }
+}
+
