@@ -24,6 +24,16 @@ procedure VaciarTableroDe_(color) {
     VaciarFilaDe_Al_(color,Este,Norte)
 }
 
+procedure VaciarTableroDe_(color) {
+    /*
+    Propósito:      -Vacia el tablero del **color** hacia el noreste.
+    Precondición:   -Ninguna.
+    Parámetros:
+        **color**:  -Color. Indíca el color de las bolitas a sacar del tablero.
+    */
+    VaciarFilaDe_Al_(color,Este,Norte)
+}
+
 procedure VaciarFilaDe_Al_(color,direccionPrincipal,direccionSecundaria) {
     /*
     Propósito:      -Vacia la fila actual de bolitas de **color** hacia el este.           
@@ -34,11 +44,10 @@ procedure VaciarFilaDe_Al_(color,direccionPrincipal,direccionSecundaria) {
     */
     IrAlInicioDelRecorridoAl_(direccionPrincipal,direccionSecundaria)                 //Inicio del recorrido
     while(quedanCeldasPorRecorrerAl_(direccionPrincipal,direccionSecundaria)) {       //quedan celdas por recorrer?
-        SacarTodasLasDeColor_(color)                     // Procesa
-        PasarASiguienteCeldaAl_(direccion)              //pasa a la siguiente celda
+        SacarTodasLasDeColor_(color)                                                 // Procesa
+        PasarASiguienteCeldaAl_(direccionPrincipal,direccionSecundaria)              //pasa a la siguiente celda
     }                               
-    SacarTodasLasDeColor_(color)                        //finaliza el recorrido
-    VolverAlInicioDelRecorridoAl_(direccion)
+    SacarTodasLasDeColor_(color)                                                    //finaliza el recorrido
 }
 
 procedure IrAlInicioDelRecorridoAl_(direccionPrincipal,direccionSecundaria){
@@ -67,14 +76,12 @@ procedure PasarASiguienteCeldaAl_(direccionPrincipal, direccionSecundaria){
     */
     if(puedeMover(direccionPrincipal)) {
         
-        Mover(direccion)
-        
+        Mover(direccionPrincipal)
         
     }else {
+        IrAlBorde(opuesto(direccionPrincipal))
         Mover(direccionSecundaria)
     }
-    
-    
 }
 
 
