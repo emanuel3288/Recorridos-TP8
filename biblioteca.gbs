@@ -228,7 +228,7 @@ direcciones no pueden ser cualesquiera, sino que deben estar relacionadas. ¿Cu�
 
 procedure IrAPrimeraCeldaEnUnRecorridoAl_Y_(dirPrincipal, dirSecundaria) {
   /*
-    PROPÓSITO:          -Posiciona el cabezal en la primera celda del recorrido en **dirPrincipal** y en **dirSecundaria**. 
+    PROPÓSITO:          -Posiciona el cabezal en la primera celda del recorrido en dirección opuesta a la **dirPrincipal** y en **dirSecundaria**. 
     PARÁMETROS:
       * dirPrincipal:   -Dirección. Indíca la primer dirección que debe tomar el cabezal para ubicarse en la primera celda del recorrido.
       * dirSecundaria:  -Dirección. Indíca la segunda dirección que debe tomar el cabezal para ubicarse en la primera celda del recorrido.
@@ -247,14 +247,14 @@ function haySiguienteCeldaEnUnRecorridoAl_Y_(dirPrincipal, dirSecundaria) {
       * dirSecundaria:    -Dirección. Indíca la segunda dirección del recorrido.
     PRECONDICIONES:       -Ninguna.
       * 
-    Tipo:                 -Booleano.Retorna verdadeor en el caso de que exista una siguiente celda en el recorrido, en caso contrario retorna falso.
+    Tipo:                 -Booleano.Retorna verdadero en el caso de que exista una siguiente celda en el recorrido, en caso contrario retorna falso.
   */
   return(puedeMover(dirPrincipal) || puedeMover(dirSecundaria))
 }
 
 procedure  IrASiguienteCeldaEnUnRecorridoAl_Y_(dirPrincipal, dirSecundaria) {
   /*
-    PROPÓSITO:        -Posiciona el cabezal en la siguiente celda del recorrido con **dirPrincipal** y **dirPrincipal**
+    PROPÓSITO:        -Posiciona el cabezal en la siguiente celda del recorrido con **dirPrincipal** y **dirSecundaria**
     PRECONDICIONES:   -Ninguna.
     PARÁMETROS:
       * dirPrincipal: -Dirección.-Indíca la primera dirección del recorrido.
