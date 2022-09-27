@@ -1,0 +1,26 @@
+/*8. Buscando la bolita roja en la fila/columna
+Escribir un procedimiento IrHastaLaBolitaRojaHacia_(direcciónABuscar) que deja el
+cabezal posicionado en la celda más próxima a la actual en la dirección dada que posea una bolita de
+color Rojo Cuidado, sí hay una bolita de color Rojo en la celda actual, el cabezal debe moverse a la más
+cercana, no permanecer en la actual. ¿Cuál es la precondición de este procedimiento?*/
+
+program {
+    IrHastaLaBolitaRojaHacia_(Norte)
+}
+
+procedure IrHastaLaBolitaRojaHacia_(direcciónABuscar) {
+    /*
+    Propósito:                -Posiciona el en la celda más próxima a la actual en la **direcciónABuscar** dada que posea una bolita de color rojo.
+    Precondición:             -Debe existir al menos un bolita roja en la **direcciónABuscar**.
+                              -Debe existir al menos una celda lindante en la **direcciónABuscar**.
+    Parámetros:             
+        **direcciónABuscar**: -Dirección. Indíca la dirección donde se posiciona el cabezal.
+    Observación:              -Es un recorrido de búsqueda de filas/columnas. 
+                              -Puede haber solamente una bolita de color rojo por celda.
+    */
+    Mover(direcciónABuscar)
+    while(not hayBolitas(Rojo)){
+        Mover(direcciónABuscar)
+    }
+}
+
