@@ -1,0 +1,33 @@
+program {
+    IrALaSiguienteVacíaHacia_(Norte)
+}
+
+/*
+9. Buscando la celda vacía
+Escribir un procedimiento IrALaSiguienteVacíaHacia_(dirección) que posiciona el cabezal en
+la próxima celda vacía en la fila o columna, desde la celda en donde se encuentra el cabezal (sin
+incluirla) hacia el borde en la dirección dada, dejando el cabezal en el borde en caso de no haber
+ninguna celda vacía en dicha dirección.
+*/
+
+procedure IrALaSiguienteVacíaHacia_(dirección) {
+    /*
+    Propósito:         -Posiciona el cabezal en **dirección** a la próxima celda vacía en la fila o columna.     
+    Precondición:      -Deben existir al menos la celda lindate en **dirección**. 
+    Parámetros:             
+        **dirección**: -Dirección. -Indíca en que dirección se busca la celda vacía más cercana de la celda actual.
+    */
+    Mover(dirección)
+    while(not estáVacía()) {
+        Mover(dirección)
+    }
+}
+
+function estáVacía() {
+    /*
+    Propósito:      -Indíca si la celda actual está vacía.
+    Precondición:   -Ninguna.
+    Tipo:           -Booleano. Retorna verdadero en el caso de que la celda esté vacía, en caso contrario retorna falso.
+    */
+    return(not hayBolitas(Rojo) && not hayBolitas(Verde) && not hayBolitas(Azul) && not hayBolitas(Negro))
+}
