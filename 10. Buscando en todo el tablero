@@ -1,0 +1,100 @@
+program {
+    IrHastaLaQueTengaUnaDeCada()
+}
+
+/*
+10. Buscando en todo el tablero
+Definir un procedimiento IrHastaLaQueTengaUnaDeCada() que posiciona el cabezal en cualquier
+celda que contenga una bolita de cada color, y que hace BOOM si no hubiera en el tablero alguna celda
+que cumpla con dicha característica.
+*/
+procedure IrHastaLaQueTengaUnaDeCada() {
+    /*
+    Propósito:         -Ubica el cabezal en una celda que tenga una bolita de cada color.   
+    Precondición:      -Deben existir al menos la celda lindate en **dirección**. 
+    Parámetros:             
+        **dirección**: -Dirección. -Indíca en que dirección se busca la celda vacía más cercana de la celda actual.
+    */
+    IrAPrimeraCeldaEnUnRecorridoAl_Y_(Norte, Este)
+    while(not hayUnaDeCada()){
+        IrASiguienteCeldaEnUnRecorridoAl_Y_(Norte, Este)
+    }
+}
+
+function hayUnaDeCada() {
+    /*
+    Propósito:      -Indíca si hay una bolita de cada color en la celda actual.
+    Precondición:   -Ninguna.
+    Tipo:           -Booleano. Retorna verdadero en el caso de que la celda tenga una bolita de cada color, en caso contrario retorna falso.
+    */
+    return(hayUnaRoja() && hayUnaVerde() && hayUnaAzul() && hayUnaNegro())
+}
+
+function hayUnaRoja(){
+    /*
+    Propósito:          -Indíca si hay una bolita de color rojo en la celda actual.
+    Precondición:       -Ninguna.
+    Tipo:               -Booleano. Retorna verdadero en el caso de que haya una bolita roja en la celda actual, en caso contrario retorna falso.
+    */
+    return(nroBolitas(Rojo)==1)
+}
+
+function hayUnaVerde(){
+    /*
+    Propósito:          -Indíca si hay una bolita de color verde en la celda actual.
+    Precondición:       -Ninguna.
+    Tipo:               -Booleano. Retorna verdadero en el caso de que haya una bolita verde en la celda actual, en caso contrario retorna falso.
+    */
+    return(nroBolitas(Verde)==1)
+}
+
+function hayUnaAzul(){
+    /*
+    Propósito:          -Indíca si hay una bolita de color azul en la celda actual.
+    Precondición:       -Ninguna.
+    Tipo:               -Booleano. Retorna verdadero en el caso de que haya una bolita azul en la celda actual, en caso contrario retorna falso.
+    */
+    return(nroBolitas(Azul)==1)
+}
+
+function hayUnaNegro(){
+    /*
+    Propósito:          -Indíca si hay una bolita de color negro en la celda actual.
+    Precondición:       -Ninguna.
+    Tipo:               -Booleano. Retorna verdadero en el caso de que haya una bolita negro en la celda actual, en caso contrario retorna falso.
+    */
+    return(nroBolitas(Negro)==1)
+}
+
+procedure IrAPrimeraCeldaEnUnRecorridoAl_Y_(dirPrincipal, dirSecundaria) {
+  /*
+    PROPÓSITO:          -Posiciona el cabezal en la primera celda del recorrido en dirección opuesta a la **dirPrincipal** y en **dirSecundaria**. 
+    PARÁMETROS:
+      * dirPrincipal:   -Dirección. Indíca la primer dirección que debe tomar el cabezal para ubicarse en la primera celda del recorrido.
+      * dirSecundaria:  -Dirección. Indíca la segunda dirección que debe tomar el cabezal para ubicarse en la primera celda del recorrido.
+    PRECONDICIONES:     -Ninguna.
+      * 
+  */
+  IrAlBorde(opuesto(dirPrincipal))
+  IrAlBorde(opuesto(dirSecundaria))
+}
+
+// consultar por si se la usar en el inicio del recorrido con valores oeste y sur.
+//ATENCION
+
+procedure  IrASiguienteCeldaEnUnRecorridoAl_Y_(dirPrincipal, dirSecundaria) {
+  /*
+    PROPÓSITO:        -Posiciona el cabezal en la siguiente celda del recorrido con **dirPrincipal** y **dirPrincipal**.
+    PRECONDICIONES:   -Deben existir al menos una celda lindate hacia la **dirPrincipal** y la **dirSecundaria.**  
+    PARÁMETROS:
+      * dirPrincipal: -Dirección.-Indíca la primera dirección del recorrido.
+      * dirSecundaria:-Dirección.-Indíca la segunda dirección del recorrido.
+  */
+  //Va al opuesto de la direccion principal.
+  if(puedeMover(dirPrincipal)) {
+    Mover(dirPrincipal)
+  }else {
+    IrAlBorde(opuesto(dirPrincipal))
+    Mover(dirSecundaria)
+  }
+}
