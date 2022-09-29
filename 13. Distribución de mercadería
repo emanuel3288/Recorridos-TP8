@@ -1,5 +1,5 @@
 program {
-    Traer_MercaderíasDelLocal_(1, Oeste)
+    Mover_MercaderíasDelLocal_AlLocal_(2, Norte, Sur)
 }
 
 /*13. Distribución de mercadería
@@ -22,18 +22,20 @@ en dirección destino. Si en el depósito origen no hay la cantidad de mercader�
 hace nada. Nuevamente se puede suponer que el cabezal se encuentra en el depósito central.
 Por ejemplo, a partir del tablero inicial, Mover_MercaderíasDelLocal_AlLocal_(3,
 Este, Sur) tiene este efecto:*/
-
+// debería haber alguna precondicion?
 //f
 procedure Mover_MercaderíasDelLocal_AlLocal_(cantidad, origen, destino) {
     /*
     Propósito:          -Mueve la **cantidad** de mercaderia desde el depósito local de **origen** hacia el depósito local de **destino**.
-    Precondición:       -
+                        -El cabezal inicia en el depósito local de **origen** y finaliza en el depósito local de **destino**.
+    Precondición:       -Ninguna.
     Parámetros:
         **cantidad**:   -Número.    Indíca la **cantidad** de mercaderia a mover.
         **origen**:     -Dirección. Indíca el depósito local de origen.
         **destino**:    -Dirección. Indíca el depósito local de destino.
     */
-    
+    Traer_MercaderíasDelLocal_(cantidad, origen)
+    Llevar_MercaderíasAlLocal_(cantidad, destino)
 }
 
 
