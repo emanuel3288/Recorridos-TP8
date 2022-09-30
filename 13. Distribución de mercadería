@@ -1,5 +1,6 @@
 program {
-    Mover_MercaderíasDelLocal_AlLocal_(2, Norte, Sur)
+
+    Mover_MercaderíasDelLocal_AlLocal_(1, Norte, Sur)
 }
 
 /*13. Distribución de mercadería
@@ -27,8 +28,8 @@ Este, Sur) tiene este efecto:*/
 procedure Mover_MercaderíasDelLocal_AlLocal_(cantidad, origen, destino) {
     /*
     Propósito:          -Mueve la **cantidad** de mercaderia desde el depósito local de **origen** hacia el depósito local de **destino**.
-                        -El cabezal inicia en el depósito local de **origen** y finaliza en el depósito local de **destino**.
-    Precondición:       -Ninguna.
+                        -El cabezal inicia en el depósito central.
+    Precondición:       -La direccion **origen** no puede ser igual a la direccion **destino**.
     Parámetros:
         **cantidad**:   -Número.    Indíca la **cantidad** de mercaderia a mover.
         **origen**:     -Dirección. Indíca el depósito local de origen.
@@ -51,7 +52,7 @@ efecto:
 //e
 procedure Traer_MercaderíasDelLocal_(cantidad, dirección) {
     /*
-    Propósito:          -Trae **cantidad** de mercaderia del deposito central hacía el deposito local en **direccion**.
+    Propósito:          -Trae **cantidad** de mercaderia del deposito central hacía el deposito local en la dirección **dirección**.
                         -El cabezal inicia en el depósito local en **dirección** y finaliza en el depósito central.
     Precondición:       -Debe existir **cantidad** de mercaderia en el depósito local.
     Parámetros:
@@ -59,24 +60,15 @@ procedure Traer_MercaderíasDelLocal_(cantidad, dirección) {
         **dirección**:  -Dirección. Indíca la dirección donde se encuentra el depósito central.
     Observación: La mercaderia se representan con bolitas azules.
     */
-    TraeSiHay_DelLocalAlCentralALa_(cantidad,dirección)
-}
-
-procedure TraeSiHay_DelLocalAlCentralALa_(cantidad,dirección) {
-    /*
-    Propósito:        -Lleva si hay **cantidad** de mercaderia del deposito local opuesto a la **dirección** hacía el deposito central.
-    Precondición:     -Debe existir **cantidad** de mercaderia en el depósito local a la **dirección**.
-    Parámetros:
-        **cantidad**: -Número.   Indíca la cantidad de mercaderia a traer.   
-        **dirección**:-Dirección.Indíca la dirección desde donde se trae la mercaderia.
-    Observación: La mercaderia se representa con bolitas azules.
-    */
     if(hay_MercaderiaParaLlevarDelLocallAlCentral(cantidad)) {
         Sacar_MercaderiaDelLocal(cantidad)
         IrDelLocal_ACentral(dirección)
+        IrDeCentralAlLocal_(opuesto(dirección))
         Agregar_MercaderiaAlCentral(cantidad)
     }
 }
+
+
 function hay_MercaderiaParaLlevarDelLocallAlCentral(cantidad) {
     /*
     Propósito:          -Indíca si hay mercaderia para llevar en el depósito local.
@@ -86,7 +78,7 @@ function hay_MercaderiaParaLlevarDelLocallAlCentral(cantidad) {
     Tipo:               -Booleano. Retorna verdadero en el caso de que haya mercaderia para llevar en el depósito local,
                                    en caso contrario retorna falso.
     */
-    return(cantidad>0)
+    return(cantidad>=nroBolitas(Azul))
 }
 
 procedure Sacar_MercaderiaDelLocal(cantidad) {
@@ -105,7 +97,7 @@ procedure Agregar_MercaderiaAlCentral(cantidad) {
     Propósito:          -Agrega **cantidad** de mercaderia al depósito central.
     Precondición:       -Ninguna.
     Parámetros:
-        **cantidad**:   -Número. Indíca la cantidad de mercaderia que se agrega en el depósito central.
+        **cantidad**:   -Número. Describe la cantidad de mercaderia que se agrega en el depósito central.
     */
     Poner_DeColor_(cantidad, Azul)
 }
@@ -121,48 +113,38 @@ Llevar_MercaderíasAlLocal_(3, Sur) tiene este efecto:
 */
 procedure Llevar_MercaderíasAlLocal_(cantidad, dirección) {
     /*
-    Propósito:          -Lleva **cantidad** de mercaderia del deposito central hacia el depósito local en **dirección**. 
-    Precondición:       -Ninguna.
+    Propósito:          -Lleva **cantidad** de mercaderia del deposito central hacia el depósito local en la dirección **dirección**. 
+    Precondición:       -El cabezal se encuentra en el depósito central.
     Parámetros:
-        **cantidad**:   -Número.    Indíca la cantidad de mercancia que lleva del depósito central al depósito local.   
-        **dirección**:  -Dirección. Indíca en que dirección del depósito local.
+        **cantidad**:   -Número.    Describe la cantidad de mercancia que lleva del depósito central al depósito local.   
+        **dirección**:  -Dirección. Describe en que dirección del depósito local.
     */
-    LlevarMercaderiaSiHay_DelCentralAlLocalEn_(cantidad,dirección)
-}
-
-procedure LlevarMercaderiaSiHay_DelCentralAlLocalEn_(cantidad,dirección) {
-    /*
-    Propósito:        -Lleva si hay **cantidad** de mercaderia del deposito central hacía el deposito local en **direccion**.
-    Precondición:     -Ninguna.
-    Parámetros:
-        **cantidad**: -Número. Indíca la cantidad de mercaderia que hay en el depósito.   
-        **dirección**:-Dirección.Indíca la dirección donde se encuentra el depósito local.
-    */
-    if(hay_MercaderiaParaLlevarDelCentralAlLocal(cantidad)) {
-        Sacar_MercaderiaDelCentral(cantidad)
-        IrDeCentralAlLocal_(dirección)
-        Agregar_MercaderiaAlLocal(cantidad)
+        if(hay_MercaderiaParaLlevarDelCentralAlLocal(cantidad)) {
+            Sacar_MercaderiaDelCentral(cantidad)
+            IrDeCentralAlLocal_(dirección)
+            Agregar_MercaderiaAlLocal(cantidad)
     }
 }
+
 
 function hay_MercaderiaParaLlevarDelCentralAlLocal(cantidad) {
     /*
     Próposito:          -Indíca si hay mercaderia para llevar en el depósito central.
-    Precondición:       -Ninguna.
+    Precondición:       -El cabezal se encuentra en el depósito central.
     Parámetros:
-        **cantidad**:   -Número. Indíca la cantidad de mercaderia a llevar.
-    Tipo:               -Booleano.Retorna verdadero en el caso de que haya mercadería para llevar del depósito local al depósito central, 
-                                  en caso contrario retorna falso.
+        **cantidad**:   -Número. Describe la cantidad de mercaderia a llevar.
+    Tipo:               -Booleano.    
     */
-    return (cantidad>0)
+    return (cantidad>=nroBolitas(Azul))
 }
 
 procedure Sacar_MercaderiaDelCentral(cantidad) {
     /*
     Propósito:      -Saca **cantidad** de mercaderia del depósito central.
     Precondición:   -Debe existir **cantidad** de mercaderia en el depósito central.
+                    -El cabezal se encuentra en el depósito central.
     Parámetros:     
-        **cantidad**: Número. Indíca la cantidad de mercadera que se va a sacar del depósito central.
+        **cantidad**: Número. Describe la cantidad de mercadera que se va a sacar del depósito central.
     */
     Sacar__Veces(Azul, cantidad)
 }
@@ -172,7 +154,7 @@ procedure Agregar_MercaderiaAlLocal(cantidad) {
     Propósito:          -Agrega **cantidad** de mercaderia al deposito local.
     Precondición:       -Ninguna.
     Parámetros: 
-        **cantidad**:   -Número. Indíca la cantidad de mercaderia que se agrega al depósito local.
+        **cantidad**:   -Número. Describe la cantidad de mercaderia que se agrega al depósito local.
     */
     Poner_DeColor_(cantidad, Azul)
 }
@@ -185,8 +167,8 @@ procedure Sacar__Veces(colorASacar, cantidadBolitasASacar) {
   PROPÓSITO:    -Saca **cantidadBolitasASacar** de **colorASacar** de la celda actual.
   PRECONDICIÓN: -Debe/n existir al menos **cantidadBolitasASacar** de **colorASacar** en la celda actual.
   PARÁMETROS:
-    **colorASacar**:    -Color. Indíca el color de la bolita a sacar.
-    **cantidadASacar**: -Número.Indíca la cantidad de bolitas a sacar.
+    **colorASacar**:    -Color. Describe el color de la bolita a sacar.
+    **cantidadASacar**: -Número.Describe la cantidad de bolitas a sacar.
   */
   repeat(cantidadBolitasASacar) {
     Sacar(colorASacar)
@@ -197,8 +179,8 @@ procedure Poner_DeColor_(cantidadAPoner, colorAPoner) {
   /*
   PROPOSITO:    -Poner **cantidadAPoner** de color **colorAPoner** en la celda actual.
   PRECONDICION: -Ninguna.
-  PARAMETROS:   -**cantidadAPoner**: Numero.Indíca la cantidad de bolitas a poner.
-                -**colorAPoner**:    Color. Indíca el color de la/s bolita/s a poner.
+  PARAMETROS:   -**cantidadAPoner**: Numero.Describe la cantidad de bolitas a poner.
+                -**colorAPoner**:    Color. Describe el color de la/s bolita/s a poner.
   */
   repeat(cantidadAPoner) {
     Poner(colorAPoner)
@@ -209,7 +191,7 @@ procedure Poner_DeColor_(cantidadAPoner, colorAPoner) {
 
 
 
-//falta terminar.
+
 /*
 c. IrDelLocal_ACentral(dirección), que mueve el cabezal al depósito central, suponiendo
 que el cabezal está en el depósito local que está en la dirección dada.
@@ -222,29 +204,15 @@ IrDeCentralAlLocal_(Sur) deja el cabezal en el depósito local Sur, o sea:
 //c
 procedure IrDelLocal_ACentral(dirección) {
     /*
-    Propòsito:          -Posiciona el cabezal que se encuentra en un deposito local con **direccion** opuesta en el deposito central.
-    Precondiciòn:       -Ninguna.
+    Propòsito:          -Posiciona el cabezal en el deposito central que se encuentra en la dirección **dirección**.
+    Precondiciòn:       -El cabezal inicia en el depósito local.
     Parámetros: 
-        **dirección**:  -Dirección. Indíca la dirección en la que se encuentra el depósito local.
+        **dirección**:  -Dirección. Describe la dirección en la que se encuentra el depósito local.
     */
-    IrHastaDepositoCentralHacia_(dirección)
-}
-
-procedure IrHastaDepositoCentralHacia_(direcciónABuscar) {
-    /*
-    Propósito:                -Posiciona el cabezal que se encuentra en un deposito local con **direcciónABuscar** opuesta en el deposito central. 
-    Precondición:             -Ninguna.
-    Parámetros:             
-        **direcciónABuscar**: -Dirección. Indíca la dirección donde se posiciona el cabezal.
-    Observación:              -Es un recorrido de búsqueda de filas/columnas. 
-                              -El depósito central está representado con 3 bolitas negras.
-    */
-    Mover(opuesto(direcciónABuscar))
     while(not esDepósitoCentral()){
-        Mover(opuesto(direcciónABuscar))
+        Mover(opuesto(dirección))
     }
 }
-
 
 /*
 b. IrDeCentralAlLocal_(dirección), que mueve el cabezal del depósito central al depósito
@@ -254,27 +222,14 @@ local que está en la dirección dada, suponiendo que el cabezal comience en el 
 //b
 procedure IrDeCentralAlLocal_(dirección) {
     /*
-    Propósito:          -Posiciona el cabezal en el depósito local en la **dirección** que está dentro de la cruz.El cabezal inicia en el depósito central y finaliza en el depósito local que se encuentra en la **direccion**. 
-    Precondición:       -
+    Propósito:          -Posiciona el cabezal en el depósito local en la direccion **dirección**.
+    Precondición:       -El cabezal inicia en el depósito central. 
+                        -Debe existir un depósito local en la dirección **dirección**.
     Parámetros:
-        **dirección**:  -Dirección. Indíca la dirección en la que se encuentra el depósito local.
+        **dirección**:  -Dirección. Describe la dirección en la que se encuentra el depósito local.
     */
-    IrHastaDepositoLocalHacia_(dirección)
-}
-
-// Del ejercicio 8
-procedure IrHastaDepositoLocalHacia_(direcciónABuscar) {
-    /*
-    Propósito:                -Posiciona el cabezal en el depósito local que se encuentra en la **direcciónABuscar** .
-    Precondición:             -Ninguna.
-    Parámetros:             
-        **direcciónABuscar**: -Dirección. Indíca la dirección donde se posiciona el cabezal.
-    Observación:              -Es un recorrido de búsqueda de filas/columnas. 
-                              -Los depósitos local están representados con 3 bolitas de color negro.
-    */
-    Mover(direcciónABuscar)
-    while(not esDepósitoLocal()){
-        Mover(direcciónABuscar)
+     while(not esDepósitoLocal()){
+        Mover(dirección)
     }
 }
 
@@ -288,8 +243,7 @@ function esDepósitoCentral() {
     /*
     Propósito:      -Indíca si hay un deposito central en la celda actual.
     Precondición:   -Ninguna.
-    Tipo:           -Booleano. Retorna verdadero en el caso de haya un deposito en la celda actual, en caso contrario retorna falso.
-    Observación:    -El depósito central se representan con 3 bolitas de color negro.
+    Tipo:           -Booleano. 
     */
     return(nroBolitas(Negro)==3)
 }
@@ -298,8 +252,8 @@ function esDepósitoLocal() {
     /*
     Propósito:      -Indíca si hay un depósito local en la celda actual.
     Precondición:   -Ninguna.
-    Tipo:           -Booleano. Retorna verdadero en el caso de que hayo un depósito en la celda local, en caso contrario retorna falso.
-    Observacion:    -EL depósito local se representa con 2 bolitas de color negro.
+    Tipo:           -Booleano.
+    
     */
     return(nroBolitas(Negro)==2)
 }
